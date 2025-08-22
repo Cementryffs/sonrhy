@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Blind Test Musical</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: #fff; }
+        .question { margin: 30px 0; }
+        .controls button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+        .score { margin-top: 20px; font-size: 18px; }
+        audio { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Blind Test Musical</h1>
+    <div class="question">
+        <audio id="audio" controls>
+  <source src="https://drive.google.com/file/d/1av-ODbjUW7mcquHa04v-hi3aMLzS1lGa/view?usp=sharing" type="audio/mpeg">
+</audio>
+        <div class="controls">
+            <button onclick="guess('A')">Réponse A</button>
+            <button onclick="guess('B')">Réponse B</button>
+            <button onclick="guess('C')">Réponse C</button>
+        </div>
+        <div id="feedback"></div>
+        <div class="score">Score: <span id="score">0</span></div>
+        <button onclick="nextQuestion()">Question suivante</button>
+    </div>
+    <script>
+        // Exemple de questions (remplacez les URLs par vos extraits audio)
+        const questions = [
+            { 
+                audio : "https://drive.google.com/file/d/1av-ODbjUW7mcquHa04v-hi3aMLzS1lGa/view?usp=drive_link",
+                answers: {A: "Chanson 1", B: "Chanson 2", C: "Chanson 3"},
+                correct: "A"
+            },
+            {
+                audio : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                answers: {A: "Chanson 4", B: "Chanson 5", C: "Chanson 6"},
+                correct: "B"
+            }
+        ];
+        let current = 0, score = 0;
+
+        function loadQuestion() {
+            const q = questions[current];
+            document.getElementById('audio').src = q.audio;
+            document.querySelectorAll('.controls button').forEach((btn, i) => {
+                btn.textContent = `Réponse ${['A','B','C'][i]}: ${q.answers[['A','B','C'][i]]}`;
+                btn.disabled = false;
+            });
+            document.getElementById('feedback').textContent = '';
+        }
+        let timerId = null;
+        function guess(answer) {
+    const q = questions[current];
+    if (answer === q.correct) {
+        score++;
+        document.getElementById('feedback').textContent = "Bonne réponse !";
+    } else {
+        document.getElementById('feedback').textContent = "Mauvaise réponse.";
+    }
+    document.getElementById('score').textContent = score;
+    document.querySelectorAll('.controls button').forEach(btn => btn.disabled = true);
+
+    if (timerId) clearTimeout(timerId);
+    timerId = setTimeout(() => {
+        nextQuestion();
+    }, 3000);
+}
+        function nextQuestion() {
+            current++;
+            if (current < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector('.question').innerHTML = `<h2>Fin du jeu !</h2><p>Score final: ${score}/${questions.length}</p>`;
+            }
+        }
+        function restartGame() {
+            current = 0;
+            score = 0;
+            document.querySelector('.question').innerHTML = `
+            <audio id="audio" controls></audio>
+            <div class="controls">
+                <button onclick="guess('A')">Réponse A</button>
+                <button onclick="guess('B')">Réponse B</button>
+                <button onclick="guess('C')">Réponse C</button>
+            </div>
+            <div id="feedback"></div>
+            <div class="score">Score: <span id="score">0</span></div>
+            <button onclick="nextQuestion()">Question suivante</button>
+            `;
+            loadQuestion();
+        }
+
+        // Ajoute le bouton "Rejouer" à la fin du jeu
+        function showEndScreen() {
+            document.querySelector('.question').innerHTML = `
+            <h2>Fin du jeu !</h2>
+            <p>Score final: ${score}/${questions.length}</p>
+            <button onclick="restartGame()">Rejouer</button>
+            `;
+        }
+
+        // Modifie nextQuestion pour utiliser showEndScreen
+        const originalNextQuestion = nextQuestion;
+        nextQuestion = function() {
+            current++;
+            if (current < questions.length) {
+            loadQuestion();
+            } else {
+            showEndScreen();
+            }
+        };
+        loadQuestion();
+    </script>
+</body>
+</html>
+
