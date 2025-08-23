@@ -100,26 +100,7 @@
             position: relative !important;
         }
         
-        .correct-answer:nth-child(1)::before {
-            opacity: 0.1!important;
-            background-image: url('https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg') !important;
-            background-size: cover !important;
-            z-index: 1 !important;
-        }
-        
-        .correct-answer:nth-child(2)::before {
-            opacity: 0.1 !important;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="25" r="12" fill="%234CAF50"/><polygon points="35,40 65,40 50,70" fill="%234CAF50"/><rect x="40" y="75" width="20" height="15" rx="3" fill="%2366BB6A"/></svg>') !important;
-            background-size: cover !important;
-            z-index: 1 !important;
-        }
-        
-        .correct-answer:nth-child(3)::before {
-            opacity: 0.1 !important;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="35" y="20" width="30" height="25" rx="8" fill="%234CAF50"/><circle cx="42" cy="30" r="3" fill="%2366BB6A"/><circle cx="58" cy="30" r="3" fill="%2366BB6A"/><path d="M40 55 Q50 65 60 55" stroke="%234CAF50" stroke-width="3" fill="none"/><rect x="30" y="70" width="40" height="20" rx="5" fill="%234CAF50"/></svg>') !important;
-            background-size: cover !important;
-            z-index: 1 !important;
-        }
+
         
         .correct-answer span {
             position: relative !important;
@@ -610,7 +591,13 @@ function formatTime(sec) {
                     audio.currentTime = maxTime;
                 }
             };
-            
+             function timescore() {
+                if (audio.currentTime >= 5 && !isAnswered) {
+                    score+=5;
+                }
+                
+             }
+
             function replayMusic() {
             if (audio.currentTime >= maxTime) {
                 audio.currentTime = 0;
@@ -668,7 +655,40 @@ function formatTime(sec) {
             isAnswered = false;
             
             console.log('Chargement de l\'audio:', q.audio);
-            audio.src = q.audio;
+            
+            // Créer un son simple avec Web Audio API en cas d'échec
+            function createTestBeep() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 2);
+                
+                return audioContext;
+            }
+            
+            // Essayer de charger l'audio, sinon utiliser un bip
+            audio.src = q.audio || '';
+            
+            // Si pas d'URL ou URL invalide, créer un bip de test
+            if (!q.audio || q.audio.includes('example.com')) {
+                console.log('URL audio invalide, création d\'un bip de test');
+                setTimeout(() => {
+                    if (audio.error) {
+                        createTestBeep();
+                    }
+                }, 1000);
+            }
             
             // Ajouter des événements pour diagnostiquer le chargement (une seule fois)
             audio.removeEventListener('loadstart', audioLoadStart);
@@ -683,13 +703,9 @@ function formatTime(sec) {
                 console.error('Message d\'erreur:', audio.error?.message);
                 console.error('URL problématique:', audio.src);
                 
-                // Essayer de charger le fallback
-                if (!audio.src.includes('Bittersweet%20Poetry')) {
-                    console.log('Tentative de chargement du fallback...');
-                    audio.src = "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3";
-                } else {
-                    console.error('Même le fallback ne fonctionne pas. Problème de format ou CORS.');
-                }
+                // Utiliser Web Audio API comme fallback
+                console.log('Fichier audio non compatible, utilisation d\'un bip de test');
+                createTestBeep();
             }
             
             audio.addEventListener('loadstart', audioLoadStart);
