@@ -70,6 +70,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: var(--bg-image, none);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -78,18 +79,6 @@
             z-index: 1;
             border-radius: 8px;
             pointer-events: none;
-        }
-        
-        .controls button:nth-child(1)::before {
-            background-image: url('https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg');
-        }
-        
-        .controls button:nth-child(2)::before {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="25" r="12" fill="%23ff9800"/><polygon points="35,40 65,40 50,70" fill="%23ff9800"/><rect x="40" y="75" width="20" height="15" rx="3" fill="%23ffb74d"/></svg>');
-        }
-        
-        .controls button:nth-child(3)::before {
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="35" y="20" width="30" height="25" rx="8" fill="%23ff9800"/><circle cx="42" cy="30" r="3" fill="%23ffb74d"/><circle cx="58" cy="30" r="3" fill="%23ffb74d"/><path d="M40 55 Q50 65 60 55" stroke="%23ff9800" stroke-width="3" fill="none"/><rect x="30" y="70" width="40" height="20" rx="5" fill="%23ff9800"/></svg>');
         }
         
         .controls button:hover::before {
@@ -623,6 +612,14 @@ function formatTime(sec) {
                 btn.style.color = 'white';
                 btn.style.display = 'block';
                 btn.classList.remove('correct-answer');
+                
+                // Définir l'image de fond dynamiquement selon la cover de la question
+                if (q.coverUrl) {
+                    btn.style.setProperty('--bg-image', `url('${q.coverUrl}')`);
+                } else {
+                    // Image par défaut si pas de cover
+                    btn.style.setProperty('--bg-image', `url('https://via.placeholder.com/400x400/333/fff?text=Album+Cover')`);
+                }
             });
             document.getElementById('feedback').textContent = '';
         }
