@@ -904,10 +904,6 @@ function formatTime(sec) {
             score = 0;
             isAnswered = false;
             
-            document.getElementById('score').textContent = score;
-            document.getElementById('question-number').textContent = `Question ${current + 1}/${questions.length}`;
-            
-            loadQuestion();
             console.log('Jeu initialisé avec', questions.length, 'questions');
         }
 
@@ -915,12 +911,18 @@ function formatTime(sec) {
             console.log('startGame appelée');
             
             try {
+                // Cacher la page d'accueil et afficher la zone de jeu AVANT d'initialiser
+                document.getElementById('homepage').style.display = 'none';
+                document.getElementById('gamearea').style.display = 'block';
+                
+                // Maintenant initialiser le jeu avec les éléments DOM visibles
                 await initGame();
                 
-                // Cacher la page d'accueil
-                document.getElementById('homepage').style.display = 'none';
-                // Afficher la zone de jeu
-                document.getElementById('gamearea').style.display = 'block';
+                // Mettre à jour les éléments UI maintenant qu'ils sont visibles
+                document.getElementById('score').textContent = score;
+                document.getElementById('question-number').textContent = `Question ${current + 1}/${questions.length}`;
+                
+                loadQuestion();
             } catch (error) {
                 console.error('Erreur dans startGame:', error);
             }
