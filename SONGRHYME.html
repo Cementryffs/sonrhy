@@ -502,20 +502,26 @@ function formatTime(sec) {
                 
                 usedSongs.add(correctSong.id);
                 
-                // Générer 2 fausses réponses aléatoires
+                // Générer 2 fausses réponses aléatoires avec leurs images
                 const wrongAnswers = [];
+                const wrongSongs = [];
                 const availableSongs = songs.filter(s => s.id !== correctSong.id);
                 
                 while (wrongAnswers.length < 2 && availableSongs.length > 0) {
                     const randomIndex = Math.floor(Math.random() * availableSongs.length);
                     const wrongSong = availableSongs[randomIndex];
                     wrongAnswers.push(`${wrongSong.artist} - ${wrongSong.title}`);
+                    wrongSongs.push(wrongSong);
                     availableSongs.splice(randomIndex, 1);
                 }
                 
-                // Créer les 3 réponses et mélanger
+                // Créer les 3 réponses avec leurs données complètes
                 const correctAnswer = `${correctSong.artist} - ${correctSong.title}`;
-                const allAnswers = [correctAnswer, ...wrongAnswers];
+                const allAnswers = [
+                    { text: correctAnswer, song: correctSong },
+                    { text: wrongAnswers[0] || "Réponse manquante", song: wrongSongs[0] || null },
+                    { text: wrongAnswers[1] || "Réponse manquante", song: wrongSongs[1] || null }
+                ];
                 
                 // Mélanger les réponses
                 for (let j = allAnswers.length - 1; j > 0; j--) {
@@ -524,16 +530,21 @@ function formatTime(sec) {
                 }
                 
                 // Trouver la position de la bonne réponse après mélange
-                const correctIndex = allAnswers.indexOf(correctAnswer);
+                const correctIndex = allAnswers.findIndex(answer => answer.text === correctAnswer);
                 const correctLetter = ['A', 'B', 'C'][correctIndex];
                 
                 // Créer la question
                 const question = {
                     audio: correctSong.audioUrl,
                     answers: {
-                        A: allAnswers[0] || "Réponse manquante",
-                        B: allAnswers[1] || "Réponse manquante", 
-                        C: allAnswers[2] || "Réponse manquante"
+                        A: allAnswers[0].text,
+                        B: allAnswers[1].text, 
+                        C: allAnswers[2].text
+                    },
+                    answerCovers: {
+                        A: allAnswers[0].song?.coverUrl || 'https://via.placeholder.com/400x400/333/fff?text=Album+Cover',
+                        B: allAnswers[1].song?.coverUrl || 'https://via.placeholder.com/400x400/333/fff?text=Album+Cover',
+                        C: allAnswers[2].song?.coverUrl || 'https://via.placeholder.com/400x400/333/fff?text=Album+Cover'
                     },
                     correct: correctLetter,
                     coverUrl: correctSong.coverUrl,
@@ -647,7 +658,8 @@ function formatTime(sec) {
             }
             
             document.querySelectorAll('.controls button').forEach((btn, i) => {
-                btn.textContent = `${q.answers[['A','B','C'][i]]}`;
+                const answerLetter = ['A','B','C'][i];
+                btn.textContent = `${q.answers[answerLetter]}`;
                 btn.disabled = false;
                 // Réinitialiser le style des boutons
                 btn.style.background = 'linear-gradient(45deg, #333, #555)';
@@ -656,9 +668,10 @@ function formatTime(sec) {
                 btn.style.display = 'block';
                 btn.classList.remove('correct-answer');
                 
-                // Définir l'image de fond dynamiquement selon la cover de la question
-                if (q.coverUrl) {
-                    btn.style.setProperty('--bg-image', `url('${q.coverUrl}')`);
+                // Définir l'image de fond selon la cover de chaque réponse
+                const coverUrl = q.answerCovers[answerLetter];
+                if (coverUrl) {
+                    btn.style.setProperty('--bg-image', `url('${coverUrl}')`);
                 } else {
                     // Image par défaut si pas de cover
                     btn.style.setProperty('--bg-image', `url('https://via.placeholder.com/400x400/333/fff?text=Album+Cover')`);
