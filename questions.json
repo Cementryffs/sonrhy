@@ -13,7 +13,7 @@
       "title": "HUMBLE.",
       "artist": "Kendrick Lamar",
       "album": "DAMN.",
-      "audioUrl": "https://example.com/kendrick-humble.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/Kendrick_Lamar_-_HUMBLE_Offblogmedia.com.mp3",
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png"
     },
     {
@@ -21,7 +21,7 @@
       "title": "Lose Yourself",
       "artist": "Eminem",
       "album": "8 Mile Soundtrack",
-      "audioUrl": "https://example.com/eminem-lose-yourself.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/EMINEM%20-%20Lose%20Yourself%20(Radio%20Edit).mp3",
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/19/8_mile_soundtrack.jpg"
     },
     {
@@ -29,7 +29,7 @@
       "title": "99 Problems",
       "artist": "Jay-Z",
       "album": "The Black Album",
-      "audioUrl": "https://example.com/jay-z-99-problems.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/01-99%20Problems%20(Clean%20Version).mp3",
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Jay-Z_-_The_Black_Album_cover.jpg"
     },
     {
@@ -37,7 +37,7 @@
       "title": "Mask Off",
       "artist": "Future",
       "album": "Future",
-      "audioUrl": "https://archive.org/download/mask-off/Mask%20Off.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/Mask%20Off.mp3",
       "coverUrl": "https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/04/webservices_1000x1000-000000-80-0-0.jpg-1129-t-2000x2000.jpeg"
     },
     {
@@ -45,23 +45,15 @@
       "title": "Still D.R.E.",
       "artist": "Dr. Dre",
       "album": "2001",
-      "audioUrl": "https://example.com/dr-dre-still-dre.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/Dr.%20Dre%20-%20Still%20D.R.E.%20ft.%20Snoop%20Dogg.mp3",
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/c/c7/Dr._Dre_-_2001.jpg"
-    },
-    {
-      "id": 8,
-      "title": "Stronger",
-      "artist": "Kanye West",
-      "album": "Graduation",
-      "audioUrl": "https://example.com/kanye-stronger.mp3",
-      "coverUrl": "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg"
     },
     {
       "id": 9,
       "title": "God's Plan",
       "artist": "Drake",
       "album": "Scorpion",
-      "audioUrl": "https://example.com/drake-gods-plan.mp3",
+      "audioUrl": "https://github.com/Cementryffs/sonrhy/blob/main/music/Drake_-_Gods_Plan_Offblogmedia.com.mp3",
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg"
     },
     {
