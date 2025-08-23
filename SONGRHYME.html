@@ -385,24 +385,27 @@
     <div id="gamearea" class="gamearea" style="display: none;">
         <h1>Blind Test Rap US</h1>
         <div class="question">
-        
-        <audio id="audio" style="display:none;"></audio>
+            <div id="question-number">Question 1/8</div>
+            <audio id="audio" style="display:none;"></audio>
 
-<div id="custom-audio-player">
-    <button id="playPauseBtn">Lecture</button>
-    <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
-    <input type="range" id="seekBar" value="0" min="0" step="1">
-    <button id="addTimeButton" onclick="addTime()">Ajouter 10 secondes</button>
-</div>
-<div class="controls">
-    <button onclick="guess('A')"></button>
-    <button onclick="guess('B')"></button>
-    <button onclick="guess('C')"></button>
-</div>
-<div id="feedback"></div>
-<div class="score">Score: <span id="score">0</span></div>
-<button onclick="nextQuestion()">Question suivante</button>
-        <script>
+            <div id="custom-audio-player">
+                <button id="playPauseBtn">Lecture</button>
+                <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                <input type="range" id="seekBar" value="0" min="0" step="1">
+                <button id="addTimeButton" onclick="addTime()">Ajouter 10 secondes</button>
+            </div>
+            <div class="controls">
+                <button onclick="guess('A')"></button>
+                <button onclick="guess('B')"></button>
+                <button onclick="guess('C')"></button>
+            </div>
+            <div id="feedback"></div>
+            <div class="score">Score: <span id="score">0</span></div>
+            <button onclick="nextQuestion()">Question suivante</button>
+        </div>
+    </div>
+
+    <script>
 
             
         // filepath: c:\Users\alexg\son.rhy\SONGRHYME.html
@@ -891,27 +894,27 @@ function formatTime(sec) {
             nextQuestion();
         }
 
+        // Initialisation du jeu
+        async function initGame() {
+            console.log('Initialisation du jeu...');
+            const songs = await loadSongsFromJSON();
+            allQuestions = generateRandomQuestions(songs, 8);
+            questions = shuffleArray(allQuestions);
+            current = 0;
+            score = 0;
+            isAnswered = false;
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('question-number').textContent = `Question ${current + 1}/${questions.length}`;
+            
+            loadQuestion();
+            console.log('Jeu initialisé avec', questions.length, 'questions');
+        }
+
         async function startGame() {
             console.log('startGame appelée');
             
             try {
-                // Initialisation du jeu
-                async function initGame() {
-                    console.log('Initialisation du jeu...');
-                    const songs = await loadSongsFromJSON();
-                    allQuestions = generateRandomQuestions(songs, 8);
-                    questions = shuffleArray(allQuestions);
-                    current = 0;
-                    score = 0;
-                    answered = false;
-                    
-                    document.getElementById('score').textContent = score;
-                    document.getElementById('question-number').textContent = `Question ${current + 1}/${questions.length}`;
-                    
-                    loadQuestion();
-                    console.log('Jeu initialisé avec', questions.length, 'questions');
-                }
-                
                 await initGame();
                 
                 // Cacher la page d'accueil
