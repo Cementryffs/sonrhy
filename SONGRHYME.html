@@ -424,7 +424,10 @@ playPauseBtn.onclick = function() {
     }, 600);
     
     if (audio.paused) {
-        audio.play();
+        audio.play().catch(error => {
+            console.error('Erreur lors de la lecture audio:', error);
+            console.log('URL audio:', audio.src);
+        });
         playPauseBtn.textContent = "Pause";
         playPauseBtn.style.background = "green"; // Vert quand lecture
         playPauseBtn.style.color = "white"
@@ -648,7 +651,26 @@ function formatTime(sec) {
             // Réinitialiser le flag de réponse pour la nouvelle question
             isAnswered = false;
             
+            console.log('Chargement de l\'audio:', q.audio);
             audio.src = q.audio;
+            
+            // Ajouter des événements pour diagnostiquer le chargement (une seule fois)
+            audio.removeEventListener('loadstart', audioLoadStart);
+            audio.removeEventListener('canplay', audioCanPlay);
+            audio.removeEventListener('error', audioError);
+            
+            function audioLoadStart() { console.log('Début du chargement audio'); }
+            function audioCanPlay() { console.log('Audio prêt à être joué'); }
+            function audioError(e) {
+                console.error('Erreur de chargement audio:', e);
+                console.error('Code d\'erreur:', audio.error?.code);
+                console.error('Message d\'erreur:', audio.error?.message);
+                console.error('URL problématique:', audio.src);
+            }
+            
+            audio.addEventListener('loadstart', audioLoadStart);
+            audio.addEventListener('canplay', audioCanPlay);
+            audio.addEventListener('error', audioError);
             
             // Si la musique jouait, la relancer après le changement de source
             if (wasPlaying) {
