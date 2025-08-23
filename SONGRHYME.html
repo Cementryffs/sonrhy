@@ -591,12 +591,18 @@ function formatTime(sec) {
                     audio.currentTime = maxTime;
                 }
             };
-             function timescore() {
-                if (audio.currentTime >= 5 && !isAnswered) {
-                    score+=5;
-                }
+            
+                    const currentTime = Math.floor(audio.currentTime);
+                    if (currentTime <= 5 && isAnswered == true   ) {
+                        score +=4
+                    }else if(currentTime <= 10 && isAnswered == true){
+                        score +=2
+                    }else{
+                        score +=1
+                    }
+                      
                 
-             }
+            
 
             function replayMusic() {
             if (audio.currentTime >= maxTime) {
@@ -613,7 +619,7 @@ function formatTime(sec) {
         });
 
         document.getElementById('audio').addEventListener('pause', function() {
-            if (this.currentTime >= maxTime) {
+            if (this.currentTime == maxTime && audio.paused == true) {
             this.currentTime = 0; // Réinitialise le timer à 0 si le lecteur est en pause à 10 secondes
             }
             // Ne pas réinitialiser maxTime lors de la pause pour permettre à la musique de continuer
@@ -936,6 +942,7 @@ function formatTime(sec) {
         function toggleOverlayAudio() {
             const audio = document.getElementById('audio');
             const playBtn = document.querySelector('.overlay-play-btn');
+            const currentTime = Math.floor(audio.currentTime);
             
             // Temporairement désactiver la limitation de temps
             const wasAnswered = isAnswered;
@@ -949,10 +956,8 @@ function formatTime(sec) {
                 playBtn.classList.remove('pause');
             }
             
-            // Restaurer l'état original après un court délai
-            setTimeout(() => {
-                isAnswered = wasAnswered;
-            }, 100);
+           
+            
         }
 
         function closeOverlayAndNext() {
