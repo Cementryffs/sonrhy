@@ -477,15 +477,31 @@ function formatTime(sec) {
                 console.error('Erreur lors du chargement des musiques:', error);
                 console.log('Utilisation des musiques de fallback');
                 
-                // Musiques de fallback en cas d'erreur
+                // Musiques de fallback en cas d'erreur - utiliser des URLs de test
                 return [
                     {
                         id: 1,
-                        title: "Bittersweet Poetry",
-                        artist: "Kanye West",
-                        album: "Graduation",
-                        audioUrl: "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3",
-                        coverUrl: "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg"
+                        title: "Test Audio",
+                        artist: "Test Artist",
+                        album: "Test Album",
+                        audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
+                        coverUrl: "https://via.placeholder.com/400x400/333/fff?text=Test+Audio"
+                    },
+                    {
+                        id: 2,
+                        title: "Sample Track",
+                        artist: "Sample Artist",
+                        album: "Sample Album",
+                        audioUrl: "https://file-examples.com/storage/fe68c8a7d9e2bb0c2c97fd8/2017/11/file_example_MP3_700KB.mp3",
+                        coverUrl: "https://via.placeholder.com/400x400/666/fff?text=Sample+Track"
+                    },
+                    {
+                        id: 3,
+                        title: "Demo Song",
+                        artist: "Demo Artist", 
+                        album: "Demo Album",
+                        audioUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+                        coverUrl: "https://via.placeholder.com/400x400/999/fff?text=Demo+Song"
                     }
                 ];
             }
@@ -666,6 +682,14 @@ function formatTime(sec) {
                 console.error('Code d\'erreur:', audio.error?.code);
                 console.error('Message d\'erreur:', audio.error?.message);
                 console.error('URL problématique:', audio.src);
+                
+                // Essayer de charger le fallback
+                if (!audio.src.includes('Bittersweet%20Poetry')) {
+                    console.log('Tentative de chargement du fallback...');
+                    audio.src = "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3";
+                } else {
+                    console.error('Même le fallback ne fonctionne pas. Problème de format ou CORS.');
+                }
             }
             
             audio.addEventListener('loadstart', audioLoadStart);
