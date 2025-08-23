@@ -33,20 +33,12 @@
       "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Jay-Z_-_The_Black_Album_cover.jpg"
     },
     {
-      "id": 5,
-      "title": "Juicy",
-      "artist": "The Notorious B.I.G.",
-      "album": "Ready to Die",
-      "audioUrl": "https://example.com/biggie-juicy.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/3/37/Ready_to_Die.jpg"
-    },
-    {
       "id": 6,
       "title": "Mask Off",
       "artist": "Future",
       "album": "Future",
-      "audioUrl": "https://example.com/future-mask-off.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/8/8c/Future_-_Future_%28album%29.png"
+      "audioUrl": "https://archive.org/download/mask-off/Mask%20Off.mp3",
+      "coverUrl": "https://www.nova.fr/wp-content/thumbnails/uploads/sites/2/2024/04/webservices_1000x1000-000000-80-0-0.jpg-1129-t-2000x2000.jpeg"
     },
     {
       "id": 7,
