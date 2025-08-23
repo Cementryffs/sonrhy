@@ -453,8 +453,8 @@ function formatTime(sec) {
 }
         let allQuestions = [];
         
-        // Fonction pour charger les questions depuis le fichier JSON
-        async function loadQuestionsFromJSON() {
+        // Fonction pour charger les musiques depuis le fichier JSON
+        async function loadSongsFromJSON() {
             try {
                 console.log('Tentative de chargement du fichier questions.json...');
                 const response = await fetch('./questions.json');
@@ -466,44 +466,84 @@ function formatTime(sec) {
                 const data = await response.json();
                 console.log('Données JSON chargées:', data);
                 
-                // Convertir le format JSON vers le format utilisé par le jeu
-                allQuestions = data.questions.map(q => ({
-                    audio: q.audioUrl,
-                    answers: {
-                        A: q.answers[0],
-                        B: q.answers[1], 
-                        C: q.answers[2]
-                    },
-                    correct: ['A', 'B', 'C'][q.correctAnswer],
-                    coverUrl: q.coverUrl,
-                    title: q.title,
-                    artist: q.artist,
-                    album: q.album
-                }));
-                
-                console.log('Questions converties:', allQuestions);
-                return allQuestions;
+                return data.songs;
             } catch (error) {
-                console.error('Erreur lors du chargement des questions:', error);
-                console.log('Utilisation des questions de fallback');
+                console.error('Erreur lors du chargement des musiques:', error);
+                console.log('Utilisation des musiques de fallback');
                 
-                // Questions de fallback en cas d'erreur
+                // Musiques de fallback en cas d'erreur
                 return [
                     {
-                        audio: "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3",
-                        answers: {
-                            A: "Kanye West - Bittersweet Poetry",
-                            B: "Jay-Z - Empire State of Mind",
-                            C: "Keyshia Cole - Heaven Sent"
-                        },
-                        correct: "A",
-                        coverUrl: "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg",
-                        title: "Kanye West - Bittersweet Poetry",
+                        id: 1,
+                        title: "Bittersweet Poetry",
                         artist: "Kanye West",
-                        album: "Graduation"
+                        album: "Graduation",
+                        audioUrl: "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3",
+                        coverUrl: "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg"
                     }
                 ];
             }
+        }
+        
+        // Fonction pour générer des questions aléatoires à partir des musiques
+        function generateRandomQuestions(songs, numberOfQuestions = 8) {
+            const questions = [];
+            const usedSongs = new Set();
+            
+            for (let i = 0; i < numberOfQuestions && i < songs.length; i++) {
+                // Choisir une musique aléatoire qui n'a pas encore été utilisée
+                let correctSong;
+                do {
+                    correctSong = songs[Math.floor(Math.random() * songs.length)];
+                } while (usedSongs.has(correctSong.id));
+                
+                usedSongs.add(correctSong.id);
+                
+                // Générer 2 fausses réponses aléatoires
+                const wrongAnswers = [];
+                const availableSongs = songs.filter(s => s.id !== correctSong.id);
+                
+                while (wrongAnswers.length < 2 && availableSongs.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * availableSongs.length);
+                    const wrongSong = availableSongs[randomIndex];
+                    wrongAnswers.push(`${wrongSong.artist} - ${wrongSong.title}`);
+                    availableSongs.splice(randomIndex, 1);
+                }
+                
+                // Créer les 3 réponses et mélanger
+                const correctAnswer = `${correctSong.artist} - ${correctSong.title}`;
+                const allAnswers = [correctAnswer, ...wrongAnswers];
+                
+                // Mélanger les réponses
+                for (let j = allAnswers.length - 1; j > 0; j--) {
+                    const k = Math.floor(Math.random() * (j + 1));
+                    [allAnswers[j], allAnswers[k]] = [allAnswers[k], allAnswers[j]];
+                }
+                
+                // Trouver la position de la bonne réponse après mélange
+                const correctIndex = allAnswers.indexOf(correctAnswer);
+                const correctLetter = ['A', 'B', 'C'][correctIndex];
+                
+                // Créer la question
+                const question = {
+                    audio: correctSong.audioUrl,
+                    answers: {
+                        A: allAnswers[0] || "Réponse manquante",
+                        B: allAnswers[1] || "Réponse manquante", 
+                        C: allAnswers[2] || "Réponse manquante"
+                    },
+                    correct: correctLetter,
+                    coverUrl: correctSong.coverUrl,
+                    title: correctAnswer,
+                    artist: correctSong.artist,
+                    album: correctSong.album
+                };
+                
+                questions.push(question);
+            }
+            
+            console.log('Questions générées:', questions);
+            return questions;
         }
         
         // Fonction pour mélanger un tableau
@@ -726,8 +766,9 @@ function formatTime(sec) {
         }
 
         async function restartGame() {
-            // Recharger les questions depuis le fichier JSON
-            await loadQuestionsFromJSON();
+            // Recharger les musiques et générer de nouvelles questions
+            const songs = await loadSongsFromJSON();
+            allQuestions = generateRandomQuestions(songs, 8);
             
             // Remélanger les questions pour un nouveau jeu
             questions = shuffleArray(allQuestions);
@@ -854,25 +895,29 @@ function formatTime(sec) {
             console.log('startGame appelée');
             
             try {
-                // Charger les questions depuis le fichier JSON
-                allQuestions = await loadQuestionsFromJSON();
-                console.log('Questions chargées:', allQuestions);
+                // Initialisation du jeu
+                async function initGame() {
+                    console.log('Initialisation du jeu...');
+                    const songs = await loadSongsFromJSON();
+                    allQuestions = generateRandomQuestions(songs, 8);
+                    questions = shuffleArray(allQuestions);
+                    current = 0;
+                    score = 0;
+                    answered = false;
+                    
+                    document.getElementById('score').textContent = score;
+                    document.getElementById('question-number').textContent = `Question ${current + 1}/${questions.length}`;
+                    
+                    loadQuestion();
+                    console.log('Jeu initialisé avec', questions.length, 'questions');
+                }
                 
-                // Remélanger les questions à chaque nouveau jeu
-                questions = shuffleArray(allQuestions);
-                console.log('Questions mélangées:', questions);
-                
-                current = 0;
-                score = 0;
-                maxTime = 10;
+                await initGame();
                 
                 // Cacher la page d'accueil
                 document.getElementById('homepage').style.display = 'none';
                 // Afficher la zone de jeu
                 document.getElementById('gamearea').style.display = 'block';
-                
-                // Charger la première question
-                loadQuestion();
             } catch (error) {
                 console.error('Erreur dans startGame:', error);
             }

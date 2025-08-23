@@ -1,124 +1,100 @@
 {
-  "questions": [
+  "songs": [
     {
       "id": 1,
-      "title": "Kanye West - Bittersweet Poetry",
+      "title": "Bittersweet Poetry",
       "artist": "Kanye West",
-      "song": "Bittersweet Poetry",
       "album": "Graduation",
       "audioUrl": "https://github.com/Cementryffs/sonrhy/raw/main/music/Bittersweet%20Poetry%20(OG)%20%5Bfeat.%20John%20Mayer%20%26%20Keyshia%20Cole%5D.mp3",
-      "coverUrl": "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg",
-      "answers": [
-        "Kanye West - Bittersweet Poetry",
-        "Jay-Z - Empire State of Mind", 
-        "Keyshia Cole - Heaven Sent"
-      ],
-      "correctAnswer": 0
+      "coverUrl": "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg"
     },
     {
       "id": 2,
-      "title": "Kendrick Lamar - HUMBLE.",
+      "title": "HUMBLE.",
       "artist": "Kendrick Lamar",
-      "song": "HUMBLE.",
       "album": "DAMN.",
       "audioUrl": "https://example.com/kendrick-humble.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png",
-      "answers": [
-        "Drake - God's Plan",
-        "Kendrick Lamar - HUMBLE.",
-        "Travis Scott - SICKO MODE"
-      ],
-      "correctAnswer": 1
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png"
     },
     {
       "id": 3,
-      "title": "Eminem - Lose Yourself",
+      "title": "Lose Yourself",
       "artist": "Eminem",
-      "song": "Lose Yourself",
       "album": "8 Mile Soundtrack",
       "audioUrl": "https://example.com/eminem-lose-yourself.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/19/8_mile_soundtrack.jpg",
-      "answers": [
-        "Eminem - Lose Yourself",
-        "50 Cent - In Da Club",
-        "Nelly - Hot in Herre"
-      ],
-      "correctAnswer": 0
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/19/8_mile_soundtrack.jpg"
     },
     {
       "id": 4,
-      "title": "Jay-Z - 99 Problems",
+      "title": "99 Problems",
       "artist": "Jay-Z",
-      "song": "99 Problems",
       "album": "The Black Album",
       "audioUrl": "https://example.com/jay-z-99-problems.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Jay-Z_-_The_Black_Album_cover.jpg",
-      "answers": [
-        "Lil Wayne - Lollipop",
-        "Jay-Z - 99 Problems",
-        "Outkast - Hey Ya!"
-      ],
-      "correctAnswer": 1
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Jay-Z_-_The_Black_Album_cover.jpg"
     },
     {
       "id": 5,
-      "title": "The Notorious B.I.G. - Juicy",
+      "title": "Juicy",
       "artist": "The Notorious B.I.G.",
-      "song": "Juicy",
       "album": "Ready to Die",
       "audioUrl": "https://example.com/biggie-juicy.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/3/37/Ready_to_Die.jpg",
-      "answers": [
-        "Tupac - California Love",
-        "Biggie - Juicy",
-        "Nas - N.Y. State of Mind"
-      ],
-      "correctAnswer": 1
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/3/37/Ready_to_Die.jpg"
     },
     {
       "id": 6,
-      "title": "Future - Mask Off",
+      "title": "Mask Off",
       "artist": "Future",
-      "song": "Mask Off",
       "album": "Future",
       "audioUrl": "https://example.com/future-mask-off.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/8/8c/Future_-_Future_%28album%29.png",
-      "answers": [
-        "Future - Mask Off",
-        "Post Malone - Rockstar",
-        "Migos - Bad and Boujee"
-      ],
-      "correctAnswer": 0
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/8/8c/Future_-_Future_%28album%29.png"
     },
     {
       "id": 7,
-      "title": "Dr. Dre - Still D.R.E.",
+      "title": "Still D.R.E.",
       "artist": "Dr. Dre",
-      "song": "Still D.R.E.",
       "album": "2001",
       "audioUrl": "https://example.com/dr-dre-still-dre.mp3",
-      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/c/c7/Dr._Dre_-_2001.jpg",
-      "answers": [
-        "Snoop Dogg - Gin and Juice",
-        "Dr. Dre - Still D.R.E.",
-        "Ice Cube - It Was a Good Day"
-      ],
-      "correctAnswer": 1
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/c/c7/Dr._Dre_-_2001.jpg"
     },
     {
       "id": 8,
-      "title": "Kanye West - Stronger",
+      "title": "Stronger",
       "artist": "Kanye West",
-      "song": "Stronger",
       "album": "Graduation",
       "audioUrl": "https://example.com/kanye-stronger.mp3",
-      "coverUrl": "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg",
-      "answers": [
-        "Kanye West - Stronger",
-        "Kid Cudi - Day 'N' Nite",
-        "Lupe Fiasco - Superstar"
-      ],
-      "correctAnswer": 0
+      "coverUrl": "https://raw.githubusercontent.com/Cementryffs/sonrhy/main/pic/logo/graduationk.jpg"
+    },
+    {
+      "id": 9,
+      "title": "God's Plan",
+      "artist": "Drake",
+      "album": "Scorpion",
+      "audioUrl": "https://example.com/drake-gods-plan.mp3",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg"
+    },
+    {
+      "id": 10,
+      "title": "SICKO MODE",
+      "artist": "Travis Scott",
+      "album": "Astroworld",
+      "audioUrl": "https://example.com/travis-sicko-mode.mp3",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/0/0b/Astroworld_by_Travis_Scott.jpg"
+    },
+    {
+      "id": 11,
+      "title": "In Da Club",
+      "artist": "50 Cent",
+      "album": "Get Rich or Die Tryin'",
+      "audioUrl": "https://example.com/50cent-in-da-club.mp3",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/4/4e/50_Cent_-_Get_Rich_or_Die_Tryin%27.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Hot in Herre",
+      "artist": "Nelly",
+      "album": "Nellyville",
+      "audioUrl": "https://example.com/nelly-hot-in-herre.mp3",
+      "coverUrl": "https://upload.wikimedia.org/wikipedia/en/a/a5/Nellyville.jpg"
     }
   ]
 }
